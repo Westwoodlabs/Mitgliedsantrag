@@ -1,0 +1,202 @@
+\documentclass[ngerman]{article}
+\usepackage[T1]{fontenc}
+\usepackage{libertine}
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{multicol}
+\usepackage[%
+    driver=pdftex,
+    web={pro,
+        tight,
+        german,
+        nodirectory,
+        usesf
+        },
+    eforms,
+    aebxmp,
+    attachsource={tex}
+]{aeb_pro}
+\usepackage{calc}
+\usepackage{eforms}
+\usepackage{array}
+\usepackage{makecell}
+
+%\screensize{297mm}{210mm} % height, width
+\margins{.6in}{.6in}{.5in}{.5in}% left,right,top, bottom
+
+
+%% Layoutparameter
+\parindent 0pt
+\parskip 3pt
+\pagestyle{empty}
+
+\newcommand{\signarea}{
+\begin{minipage}{0.2\textwidth}
+	\begin{center}
+		\dotfill
+		
+		Ort
+	\end{center}
+\end{minipage}\hfill
+\begin{minipage}{0.15\textwidth}
+	\begin{center}
+		\dotfill
+		
+		Datum
+	\end{center}
+\end{minipage}\hfill
+\begin{minipage}{0.5\textwidth}
+	\begin{center}
+		\dotfill
+		
+		Unterschrift
+	\end{center}
+\end{minipage}
+}
+
+\newcommand{\infoInput}[2][5.5in]{\stepcounter{infoLineNum}%
+	\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\textField[\W0\BC{}\BG{}\TU{#2}]{name\theinfoLineNum}{#1}{12bp}}}\dotfill}
+
+%% Fussnote in Tabelle
+\newcounter{myfootertablecounter}
+\newcommand\myfootnotemark{%
+	\addtocounter{footnote}{1}%
+	\footnotemark[\thefootnote]%
+}%
+\newcommand\myfootnotetext[1]{%
+	\addtocounter{myfootertablecounter}{1}
+	\footnotetext[\value{myfootertablecounter}]{#1}
+}
+
+\begin{document}
+	
+\begin{figure}[htb]
+	\centering
+	\includegraphics[scale=0.7]{logo}
+\end{figure}
+
+\begin{center}
+	\LARGE{Antrag auf Mitgliedschaft - Westwoodlabs e.V. }
+\end{center}
+
+\vspace{6pt}
+
+\newcounter{infoLineNum}
+\setcounter{infoLineNum}{0}
+
+
+Ich beantrage hiermit die Mitgliedschaft im Verein Westwoodlabs e.V. und erkenne die Satzung und Ziele des Vereins an. 
+
+\vspace{10pt}
+
+\begin{tabular}{lp{8cm}}
+    Nachname, Vorname:   				& \infoInput{Nachname, Vorname}\\[6pt]
+    Geburstdatum:   					& \infoInput{Geburtsdatum}\\[6pt]
+    Straße Hausnummer:                  & \infoInput{Strasse Hausnummer}\\[6pt]
+    PLZ Ort:                            & \infoInput{PLZ Ort}\\[6pt]
+    E-Mail:                             & \infoInput{E-Mail}\\[6pt]
+\end{tabular}
+
+\newcounter{checkboxcounter}
+\setcounter{checkboxcounter}{0}
+\def\firstCk{\stepcounter{checkboxcounter}\checkBox{checkbox\thecheckboxcounter}{11bp}{11bp}{ja}}
+\renewcommand{\labelitemi}{\firstCk}
+
+\vspace{10pt}
+
+\textbf{Mitgliedschaft}
+\begin{itemize}
+	\item Fördermitgliedschaft: 5,- € pro Monat
+	\item Vergünstigte\myfootnotemark Mitgliedschaft: 10,- € pro Monat (bitte Bescheinigung beilegen)
+	\item Normale Mitgliedschaft: 20,- € pro Monat
+	\item Zusätzlicher freiwilliger Mitgliedsbeitrag von \makebox[0.5in][l]{\infoInput[0.5in]{Mehrbeitrag}}€ pro Monat
+\end{itemize}
+
+
+\myfootnotetext{Eine solche Ermäßigung gibt es für Studierende, Rentner/innen, Arbeitslose, Zivil- und Wehrdienstleistende. Senden bitte eine entsprechende Bescheinigung mit, da ohne diese eine nachträgliche Hochstufung in die Gruppe \textit{Normale Mitgliedschaft} erfolgen müsste. }
+\vspace{10pt}
+
+\textbf{Zahlungsmodalitäten}
+\begin{itemize}
+\item Der Beitrag wird Überwiesen
+\item Eine unterschriebene Einzugsermächtigung liegt bei
+\end{itemize}
+
+\vspace{50pt}
+
+\signarea
+
+\vspace{50pt}
+
+Senden den vollständig ausgefüllten Antrag bitte an:\\
+\begin{center}
+	\begin{tabular}{c>{\centering\arraybackslash}m{3cm}c}
+		vorstand@westwoodlabs.de & oder & \makecell{ Westwoodlabs e.V. \\ c/o Patric Steffen \\ Friedrichstraße 13 \\ 57639 Rodenbach-Udert}\\
+	\end{tabular}
+\end{center}
+
+
+%% Rückseite
+\newpage
+
+\renewcommand\thesubsection{\arabic{subsection}}
+
+%\begin{flushright}
+Westwoodlabs e.V.\\
+c/o Patric Steffen\\
+Friedrichstraße 13\\
+57639 Rodenbach-Udert\\
+%\end{flushright}
+
+\bigskip
+Gläubiger-Identifikationsnummer: DE111122223333444455556667777\\[5pt]
+Mandatsreferenz: XYZ1112223334445556677888888
+\\[1cm]
+
+\textbf{\textsf{V\,E\,R\,T\,R\,A\,G}}\\
+
+\bigskip
+\begin{tabular}{p{3.5cm}p{8cm}}
+	Kontoinhaber:   					& \infoInput{Kontoinhaber}\\[6pt]
+	Straße Hausnummer:                  & \infoInput{Strasse Hausnummer}\\[6pt]
+	PLZ Ort:                            & \infoInput{PLZ Ort}\\[6pt]
+\end{tabular}
+
+\bigskip
+\textbf{Kreditinstitut}\\
+\\
+\begin{tabular}{p{3.5cm}p{8cm}}
+	Name:		& \infoInput{Kreditinstitut}\\[6pt]
+	IBAN:       & \infoInput{IBAN}\\[6pt]
+	BIC:        & \infoInput{BIC}\\[6pt]
+\end{tabular}
+
+\bigskip
+\textbf{Erteilung einer Einzugsermächtigung und eines SEPA-Lastschriftmandats}
+
+\bigskip
+\textbf{1. Einzugsermächtigung}
+
+Ich ermächtige Westwoodlabs e.V. widerruflich, die von mir zu entrichtenden Zahlungen bei fälligkeit 
+durch Lastschrift von meinem Konto einzuziehen.
+
+\bigskip
+\textbf{2. SEPA-Lastschriftmandat}
+
+Ich ermächtige Westwoodlabs e.V., Zahlungen von meinem Konto mittels Lastschrift einzuziehen. 
+Zugleich weise ich mein Kreditinstitut an, die von Westwoodlabs e.V. auf mein Konto 
+gezogenen Lastschriften einzulösen.
+
+
+\emph{Hinweis:} Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum,
+die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem
+Kreditinstitut vereinbarten Bedingungen.
+
+\bigskip
+Vor dem ersten Einzug einer SEPA-Basislastschrift wird mich Westwoodlabs e.V über den Einzug in dieser Verfahrensart unterrichten.\\
+
+\vspace{50pt}
+
+\signarea
+\end{document} 
