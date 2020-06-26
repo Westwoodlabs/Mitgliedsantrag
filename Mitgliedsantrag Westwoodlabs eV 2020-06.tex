@@ -7,6 +7,7 @@
 \usepackage{multicol}
 \usepackage[%
     driver=pdftex,
+    nopro,
     web={pro,
         tight,
         german,
@@ -21,6 +22,7 @@
 \usepackage{eforms}
 \usepackage{array}
 \usepackage{makecell}
+\usepackage{scrextend}
 
 %\screensize{297mm}{210mm} % height, width
 \margins{.6in}{.6in}{.5in}{.5in}% left,right,top, bottom
@@ -31,43 +33,46 @@
 \parskip 3pt
 \pagestyle{empty}
 
+\newcommand{\infoInput}[2][8cm]{\stepcounter{infoLineNum}%
+		\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\textField[\W0\BC{}\BG{}\TU{#2}]{name\theinfoLineNum}{#1}{12bp}}}\dotfill}}
+
+\newcommand{\infoInputNum}[2][3cm]{\stepcounter{infoLineNum}%
+	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\textField[\W0\BC{}\BG{}\TU{#2}\AA{%
+				\AAKeystroke{AFNumber_Keystroke(0,0,0,0,"",true)}
+				\AAFormat{AFNumber_Format(0,0,0,0,"",true)}}
+			]{name\theinfoLineNum}{#1}{12bp}}}\dotfill}}
+		
+\newcommand{\infoInputDate}[2][3cm]{\stepcounter{infoLineNum}%
+	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\textField[\W0\BC{}\BG{}\TU{#2}\AA{%
+				\AAKeystroke{AFDate_KeystrokeEx("yy-mm-dd")}
+				\AAFormat{AFDate_Format("yy-mm-dd")}}
+			]{name\theinfoLineNum}{#1}{12bp}}}\dotfill}}
+
+
 \newcommand{\signarea}{
-\begin{minipage}{0.2\textwidth}
-	\begin{center}
-		\dotfill
-		
-		Ort
-	\end{center}
-\end{minipage}\hfill
-\begin{minipage}{0.15\textwidth}
-	\begin{center}
-		\dotfill
-		
-		Datum
-	\end{center}
-\end{minipage}\hfill
-\begin{minipage}{0.5\textwidth}
-	\begin{center}
-		\dotfill
-		
-		Unterschrift
-	\end{center}
-\end{minipage}
+	\begin{minipage}{0.35\textwidth}
+		\begin{center}
+			\infoInput[\textwidth]{Ort}
+				
+			Ort
+		\end{center}
+	\end{minipage}\hfill
+	\begin{minipage}{0.15\textwidth}
+		\begin{center}
+			\infoInputDate[\textwidth]{Datum}
+			
+			Datum
+		\end{center}
+	\end{minipage}\hfill
+	\begin{minipage}{0.35\textwidth}
+		\begin{center}
+			\infoInput[\textwidth]{Unterschrift}
+			
+			Unterschrift
+		\end{center}
+	\end{minipage}
 }
 
-\newcommand{\infoInput}[2][5.5in]{\stepcounter{infoLineNum}%
-	\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\textField[\W0\BC{}\BG{}\TU{#2}]{name\theinfoLineNum}{#1}{12bp}}}\dotfill}
-
-%% Fussnote in Tabelle
-\newcounter{myfootertablecounter}
-\newcommand\myfootnotemark{%
-	\addtocounter{footnote}{1}%
-	\footnotemark[\thefootnote]%
-}%
-\newcommand\myfootnotetext[1]{%
-	\addtocounter{myfootertablecounter}{1}
-	\footnotetext[\value{myfootertablecounter}]{#1}
-}
 
 \DeclareDocInfo{
 	title=Antrag auf Mitgliedschaft - Westwoodlabs e.V.,
@@ -75,31 +80,23 @@
 }
 
 \begin{document}
-	
-\begin{figure}[htb]
-	\centering
-	\includegraphics[scale=0.7]{logo}
-\end{figure}
+
+\centerline{\includegraphics[scale=0.5]{logo}}
 
 \begin{center}
-	\LARGE{Antrag auf Mitgliedschaft - Westwoodlabs e.V. }
+	\LARGE{Antrag auf Mitgliedschaft im Verein Westwoodlabs e.V.}
 \end{center}
-
-\vspace{6pt}
 
 \newcounter{infoLineNum}
 \setcounter{infoLineNum}{0}
 
-
-Ich beantrage hiermit die Mitgliedschaft im Verein Westwoodlabs e.V. und erkenne die Satzung und Ziele des Vereins an. 
-
-\vspace{10pt}
-
-\begin{tabular}{lp{8cm}}
+\vspace{5pt}
+\textbf{Stammdaten}\\
+\begin{tabular}{lp{5.5in}}
     Nachname, Vorname:   				& \infoInput{Nachname, Vorname}\\[6pt]
-    Geburstdatum:   					& \infoInput{Geburtsdatum}\\[6pt]
-    Straße Hausnummer:                  & \infoInput{Strasse Hausnummer}\\[6pt]
-    PLZ Ort:                            & \infoInput{PLZ Ort}\\[6pt]
+    Geburtsdatum:   					& \infoInput{Geburtsdatum}\\[6pt]
+    Straße und Hausnummer:              & \infoInput{Strasse Hausnummer}\\[6pt]
+    PLZ und Ort:                        & \infoInput{PLZ Ort}\\[6pt]
     E-Mail:                             & \infoInput{E-Mail}\\[6pt]
 \end{tabular}
 
@@ -112,34 +109,46 @@ Ich beantrage hiermit die Mitgliedschaft im Verein Westwoodlabs e.V. und erkenne
 
 \textbf{Mitgliedschaft}
 \begin{itemize}
-	\item Fördermitgliedschaft: 5,- € pro Monat
-	\item Vergünstigte\myfootnotemark Mitgliedschaft: 10,- € pro Monat (bitte Bescheinigung beilegen)
-	\item Normale Mitgliedschaft: 20,- € pro Monat
-	\item Zusätzlicher freiwilliger Mitgliedsbeitrag von \makebox[0.5in][l]{\infoInput[0.5in]{Mehrbeitrag}}€ pro Monat
+	\item Vollmitglied\footnote{Vollmitglieder zahlen einen Mindestbeitrag von 20,-€ pro Monat. Der Beitrag kann auf freiwilliger Basis erhöht werden.}
+	\item Vollmitglied ermäßigt\footnote{Ermäßigte Vollmitglieder zahlen einen Mindestbeitrag von 10,-€ pro Monat. Eine solche Ermäßigung gibt es für Studierende, Rentner/innen, Arbeitslose, Zivil- und Wehrdienstleistende. Bitte eine entsprechende Bescheinigung mitsenden, da ansonsten eine nachträgliche Hochstufung in die Gruppe \textit{Vollmitgliedschaft} erfolgt. Der Beitrag kann auf freiwilliger Basis erhöht werden.} (bitte Bescheinigung beilegen)
+	\item Fördermitgliedschaft\footnote{Fördermitglieder zahlen einen Mindestbeitrag von 5,-€ pro Monat. Fördermitglieder erhalten keinerlei Stimmrecht. Der Beitrag kann auf freiwilliger Basis erhöht werden.}
 \end{itemize}
 
+\vspace{5pt}
 
-\myfootnotetext{Eine solche Ermäßigung gibt es für Studierende, Rentner/innen, Arbeitslose, Zivil- und Wehrdienstleistende. Senden bitte eine entsprechende Bescheinigung mit, da ohne diese eine nachträgliche Hochstufung in die Gruppe \textit{Normale Mitgliedschaft} erfolgen müsste. }
-\vspace{10pt}
+\textbf{Mitgliedsbeitrag\footnote{Bitte beachte, wenn du mit deinem Mitgliedsbeiträgen um mehr als sechs Monate im Rückstand bist, kann dies zur Kündigung und zum Ausschluss aus dem Verein führen.}}
+\begin{addmargin}{1em}
+	\infoInputNum[0.5in]{Mehrbeitrag}€ pro Monat\
+\end{addmargin}
+
+
+
+\vspace{5pt}
 
 \textbf{Zahlungsmodalitäten}
 \begin{itemize}
-\item Der Beitrag wird Überwiesen
-\item Eine unterschriebene Einzugsermächtigung liegt bei
+\item Lastschrift (Bitte unterschriebene Einzugsermächtigung beilegen, siehe zweite Seite)
+\item Überweisung oder Dauerauftrag (Bitte nur in Ausnahmefällen. Fällig zum 01. jeden Monats)
 \end{itemize}
 
-\vspace{50pt}
+\vspace{20pt}
+
+Ich beantrage hiermit die Mitgliedschaft im Verein Westwoodlabs e.V. und erkenne die Satzung und Ziele des Vereins mit meiner Unterschrift an. Über die Aufnahme in Verein entscheidet der Vorstand. Eine Rückmeldung erhältst du zeitnah per E-Mail. Sollte dein Antrag angenommen werden, bekommst du eine Willkommens-E-Mail.
+
+\vspace{40pt}
 
 \signarea
 
-\vspace{50pt}
+\vspace{40pt}
 
-Senden den vollständig ausgefüllten Antrag bitte an:\\
+Senden den vollständig ausgefüllten Antrag bitte an:
 \begin{center}
 	\begin{tabular}{c>{\centering\arraybackslash}m{3cm}c}
-		vorstand@westwoodlabs.de & oder & \makecell{ Westwoodlabs e.V. \\ c/o Patric Steffen \\ Friedrichstraße 13 \\ 57639 Rodenbach-Udert}\\
+		\makecell{vorstand@westwoodlabs.de \\ (eingescannt oder mit \\ Qualifizierter elektronischer Signatur)} & oder & \makecell{Westwoodlabs e.V. \\ c/o Patric Steffen \\ Friedrichstraße 13 \\ 57639 Rodenbach-Udert}\\
 	\end{tabular}
 \end{center}
+
+\vspace{10pt}
 
 
 %% Rückseite
@@ -154,27 +163,30 @@ Friedrichstraße 13\\
 57639 Rodenbach-Udert\\
 %\end{flushright}
 
-\bigskip
-Gläubiger-Identifikationsnummer: DE111122223333444455556667777\\[5pt]
-Mandatsreferenz: XYZ1112223334445556677888888
+Sparkasse BLUB\\
+IBAN:\\
+BIC:\\
+Gläubiger-Identifikationsnummer: DE1changem2changeme3changeme\\[5pt]
 \\[1cm]
 
 \textbf{\textsf{V\,E\,R\,T\,R\,A\,G}}\\
 
 \bigskip
-\begin{tabular}{p{3.5cm}p{8cm}}
+\textbf{Mitglied}\\
+\\
+\begin{tabular}{p{4cm}l}
 	Kontoinhaber:   					& \infoInput{Kontoinhaber}\\[6pt]
-	Straße Hausnummer:                  & \infoInput{Strasse Hausnummer}\\[6pt]
-	PLZ Ort:                            & \infoInput{PLZ Ort}\\[6pt]
+	Straße und Hausnummer:              & \infoInput{Strasse Hausnummer}\\[6pt]
+	PLZ und Ort:                        & \infoInput{PLZ Ort}\\[6pt]
 \end{tabular}
 
 \bigskip
 \textbf{Kreditinstitut}\\
 \\
-\begin{tabular}{p{3.5cm}p{8cm}}
-	Name:		& \infoInput{Kreditinstitut}\\[6pt]
-	IBAN:       & \infoInput{IBAN}\\[6pt]
-	BIC:        & \infoInput{BIC}\\[6pt]
+\begin{tabular}{p{4cm}l}
+	Name d. Kreditinstitutes:		& \infoInput{Kreditinstitut}\\[6pt]
+	IBAN:       					& \infoInput{IBAN}\\[6pt]
+	BIC:       						& \infoInput{BIC}\\[6pt]
 \end{tabular}
 
 \bigskip
@@ -199,7 +211,7 @@ die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem
 Kreditinstitut vereinbarten Bedingungen.
 
 \bigskip
-Vor dem ersten Einzug einer SEPA-Basislastschrift wird mich Westwoodlabs e.V über den Einzug in dieser Verfahrensart unterrichten.\\
+Vor dem ersten Einzug einer SEPA-Basislastschrift wird mich Westwoodlabs e.V über den Einzug in dieser Verfahrensart unterrichten und mir die Mandatsreferenz mitteilen.\\
 
 \vspace{50pt}
 
