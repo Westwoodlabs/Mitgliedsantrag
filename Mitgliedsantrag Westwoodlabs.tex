@@ -4,6 +4,8 @@
 \usepackage{babel}
 \usepackage[utf8]{inputenc}
 \usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{xcolor}
 \usepackage{multicol}
 \usepackage[%
     driver=pdftex,
@@ -23,6 +25,7 @@
 \usepackage{array}
 \usepackage{makecell}
 \usepackage{scrextend}
+\usepackage[hang,flushmargin]{footmisc}
 
 %\screensize{297mm}{210mm} % height, width
 \margins{.6in}{.6in}{.5in}{.5in}% left,right,top, bottom
@@ -40,22 +43,37 @@
 \parskip 3pt
 \pagestyle{empty}
 
+% Header
+\newcommand{\header}[2]{%
+	\centerline{\includegraphics[scale=0.5]{logo}}
+	\begin{center}
+		\LARGE{#1}
+	\end{center}
+	\vspace{20pt}
+}
+
+% Heading
+\newcommand{\heading}[2]{%
+	\textbf{#1}
+	\vspace{5pt}
+}
+
+
+% Text Fields
 \newcommand{\infoInput}[2][8cm]{\stepcounter{infoLineNum}%
 		\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\textField[\W0\BC{}\BG{}\TU{#2}]{name\theinfoLineNum}{#1}{12bp}}}\dotfill}}
-
 \newcommand{\infoInputNum}[2][3cm]{\stepcounter{infoLineNum}%
 	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\textField[\W0\BC{}\BG{}\TU{#2}\AA{%
 				\AAKeystroke{AFNumber_Keystroke(0,0,0,0,"",true)}
 				\AAFormat{AFNumber_Format(0,0,0,0,"",true)}}
-			]{name\theinfoLineNum}{#1}{12bp}}}\dotfill}}
-		
+			]{name\theinfoLineNum}{#1}{12bp}}}\dotfill}}		
 \newcommand{\infoInputDate}[2][3cm]{\stepcounter{infoLineNum}%
 	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\textField[\W0\BC{}\BG{}\TU{#2}\AA{%
 				\AAKeystroke{AFDate_KeystrokeEx("yy-mm-dd")}
 				\AAFormat{AFDate_Format("yy-mm-dd")}}
 			]{name\theinfoLineNum}{#1}{12bp}}}\dotfill}}
 
-
+% Sign area
 \newcommand{\signarea}{
 	\begin{minipage}{0.35\textwidth}
 		\begin{center}
@@ -73,7 +91,8 @@
 	\end{minipage}\hfill
 	\begin{minipage}{0.35\textwidth}
 		\begin{center}
-			\infoInput[\textwidth]{Unterschrift}
+			\vspace{12bp}
+			\dotfill
 			
 			Unterschrift
 		\end{center}
@@ -86,21 +105,19 @@
 	author=Westwoodlabs e.V.
 }
 
+\renewcommand\thefootnote{\textcolor{black}{\arabic{footnote}}}
+
 \begin{document}
 
-\centerline{\includegraphics[scale=0.5]{logo}}
-
-\begin{center}
-	\LARGE{Antrag auf Mitgliedschaft im Verein Westwoodlabs e.V.}
-\end{center}
+\header{Antrag auf Mitgliedschaft im Verein Westwoodlabs e.V.}
 
 \newcounter{infoLineNum}
 \setcounter{infoLineNum}{0}
 
-\vspace{5pt}
-\textbf{Stammdaten}\\
+\heading{Stammdaten}\\
+\\
 \begin{tabular}{lp{5.5in}}
-    Nachname, Vorname:   				& \infoInput{Nachname, Vorname}\\[6pt]
+    Vor- und Nachname:   				& \infoInput{Nachname, Vorname}\\[6pt]
     Geburtsdatum:   					& \infoInput{Geburtsdatum}\\[6pt]
     Straße und Hausnummer:              & \infoInput{Strasse Hausnummer}\\[6pt]
     PLZ und Ort:                        & \infoInput{PLZ Ort}\\[6pt]
@@ -114,7 +131,8 @@
 
 \vspace{10pt}
 
-\textbf{Mitgliedschaft}
+\heading{Mitgliedschaft}
+
 \begin{itemize}
 	\item Vollmitglied\footnote{Vollmitglieder zahlen einen Mindestbeitrag von 20,-€ pro Monat. Der Beitrag kann auf freiwilliger Basis erhöht werden.}
 	\item Vollmitglied ermäßigt\footnote{Ermäßigte Vollmitglieder zahlen einen Mindestbeitrag von 10,-€ pro Monat. Eine solche Ermäßigung gibt es für Studierende, Auszubildende, Personen im Ruhestand, Arbeitslose, Zivil- und Wehrdienstleistende. Bitte eine entsprechende Bescheinigung mitsenden, da ansonsten eine nachträgliche Hochstufung in die Gruppe \textit{Vollmitgliedschaft} erfolgt. Der Beitrag kann auf freiwilliger Basis erhöht werden.} (bitte Bescheinigung beilegen)
@@ -123,7 +141,8 @@
 
 \vspace{5pt}
 
-\textbf{Mitgliedsbeitrag\footnote{Bitte beachte, wenn du mit deinem Mitgliedsbeiträgen um mehr als sechs Monate im Rückstand bist, kann dies zur Kündigung und zum Ausschluss aus dem Verein führen.}}
+\heading{Mitgliedsbeitrag\footnote{Bitte beachte, wenn du mit deinem Mitgliedsbeiträgen um mehr als sechs Monate im Rückstand bist, kann dies zur Kündigung und zum Ausschluss aus dem Verein führen.}}
+
 \begin{addmargin}{1em}
 	\infoInputNum[0.5in]{Mehrbeitrag}€ pro Monat\
 \end{addmargin}
@@ -132,7 +151,8 @@
 
 \vspace{5pt}
 
-\textbf{Zahlungsmodalitäten}
+\heading{Zahlungsmodalitäten}
+
 \begin{itemize}
 \item Lastschrift (Bitte unterschriebene Einzugsermächtigung beilegen, siehe zweite Seite)
 \item Überweisung oder Dauerauftrag (Bitte nur in Ausnahmefällen. Fällig zum 01. jeden Monats)
@@ -142,11 +162,11 @@
 
 Ich beantrage hiermit die Mitgliedschaft im Verein Westwoodlabs e.V. und erkenne die Satzung und Ziele des Vereins mit meiner Unterschrift an. Über die Aufnahme in den Verein entscheidet der Vorstand. Eine Rückmeldung erhältst du zeitnah per E-Mail. Sollte dein Antrag angenommen werden, bekommst du eine Willkommens-E-Mail.
 
-\vspace{40pt}
+\vspace{30pt}
 
 \signarea
 
-\vspace{40pt}
+\vspace{30pt}
 
 Sende den vollständig ausgefüllten Antrag bitte an:
 \begin{center}
@@ -163,23 +183,29 @@ Sende den vollständig ausgefüllten Antrag bitte an:
 
 \renewcommand\thesubsection{\arabic{subsection}}
 
-%\begin{flushright}
-Westwoodlabs e.V.\\
-c/o Patric Steffen\\
-Friedrichstraße 13\\
-57639 Rodenbach-Udert\\
-%\end{flushright}
+\header{Einzugsermächtigung und SEPA-Lastschriftmandat}
 
-Westerwald Bank eG Volks- und Raiffeisenbank\\
-IBAN: ChangeMeChangeMe\\
-BIC: GENODE51WW1\\
-Gläubiger-Identifikationsnummer: DE76WWL00002322139\\[5pt]
-\\[1cm]
+\begin{minipage}[t]{0.5\textwidth}
+	Westerwald Bank eG Volks- und Raiffeisenbank\\
+	IBAN: DRAFT DRAFT DRAFT\\
+	BIC: GENODE51WW1\\
+	Gläubiger-Identifikationsnummer: DE76WWL00002322139	
+\end{minipage}\hfill
+\begin{minipage}[t]{0.5\textwidth}
+	\raggedright
+	\begin{flushright}
+		Westwoodlabs e.V.\\
+		c/o Patric Steffen\\
+		Friedrichstraße 13\\
+		57639 Rodenbach-Udert\\	
+	\end{flushright}
+\end{minipage}
 
-\textbf{\textsf{V\,E\,R\,T\,R\,A\,G}}\\
+\vspace{30pt}
+\textbf{Erteilung einer Einzugsermächtigung und eines SEPA-Lastschriftmandats}
 
 \bigskip
-\textbf{Mitglied}\\
+\heading{Mitglied}\\
 \\
 \begin{tabular}{p{4cm}l}
 	Kontoinhaber:   					& \infoInput{Kontoinhaber}\\[6pt]
@@ -188,7 +214,7 @@ Gläubiger-Identifikationsnummer: DE76WWL00002322139\\[5pt]
 \end{tabular}
 
 \bigskip
-\textbf{Kreditinstitut}\\
+\heading{Kreditinstitut}\\
 \\
 \begin{tabular}{p{4cm}l}
 	Name d. Kreditinstitutes:		& \infoInput{Kreditinstitut}\\[6pt]
@@ -197,25 +223,18 @@ Gläubiger-Identifikationsnummer: DE76WWL00002322139\\[5pt]
 \end{tabular}
 
 \bigskip
-\textbf{Erteilung einer Einzugsermächtigung und eines SEPA-Lastschriftmandats}
-
-\bigskip
 \textbf{1. Einzugsermächtigung}
 
-Ich ermächtige Westwoodlabs e.V. widerruflich, die von mir zu entrichtenden Zahlungen bei fälligkeit 
-durch Lastschrift von meinem Konto einzuziehen.
+Ich ermächtige Westwoodlabs e.V. widerruflich, die von mir zu entrichtenden Zahlungen bei fälligkeit durch Lastschrift von meinem Konto einzuziehen.
 
 \bigskip
 \textbf{2. SEPA-Lastschriftmandat}
 
 Ich ermächtige Westwoodlabs e.V., Zahlungen von meinem Konto mittels Lastschrift einzuziehen. 
-Zugleich weise ich mein Kreditinstitut an, die von Westwoodlabs e.V. auf mein Konto 
-gezogenen Lastschriften einzulösen.
+Zugleich weise ich mein Kreditinstitut an, die von Westwoodlabs e.V. auf mein Konto gezogenen Lastschriften einzulösen.
 
 
-\emph{Hinweis:} Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum,
-die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem
-Kreditinstitut vereinbarten Bedingungen.
+\emph{Hinweis:} Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrages verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.
 
 \bigskip
 Vor dem ersten Einzug einer SEPA-Basislastschrift wird mich Westwoodlabs e.V. über den Einzug in dieser Verfahrensart unterrichten und mir die Mandatsreferenz mitteilen.\\
