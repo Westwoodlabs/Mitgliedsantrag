@@ -1,4 +1,5 @@
 \documentclass[ngerman,a4paper]{article}
+\usepackage[margin=.5in]{geometry}
 \usepackage[T1]{fontenc}
 \usepackage{libertine}
 \usepackage{babel}
@@ -7,28 +8,13 @@
 \usepackage{tabularx}
 \usepackage{xcolor}
 \usepackage{multicol}
-\usepackage[%
-    driver=pdftex,
-    nopro,
-    web={pro,
-        tight,
-        german,
-        nodirectory,
-        usesf
-        },
-    eforms,
-    aebxmp,
-    attachsource={tex}
-]{aeb_pro}
+\usepackage[hidelinks]{hyperref}
 \usepackage{calc}
-\usepackage{eforms}
 \usepackage{array}
 \usepackage{makecell}
 \usepackage{scrextend}
 \usepackage[hang,flushmargin]{footmisc}
-
-%\screensize{297mm}{210mm} % height, width
-\margins{.6in}{.6in}{.5in}{.5in}% left,right,top, bottom
+\usepackage{tikz}
 
 % References
 % http://mirror.las.iastate.edu/tex-archive/macros/latex/contrib/aeb_pro/aeb_pro/doc/aebpro_man.pdf
@@ -45,11 +31,21 @@
 
 % Header
 \newcommand{\header}[2]{%
-	\centerline{\includegraphics[scale=0.5]{logo}}
-	\begin{center}
+
+\begin{minipage}[t]{0.8\textwidth}
+	\begin{flushleft}
+		\vspace{0pt}
 		\LARGE{#1}
-	\end{center}
-	\vspace{20pt}
+	\end{flushleft}
+\end{minipage}%
+
+\vspace{10pt}
+
+\begin{tikzpicture}[remember picture, overlay]
+\node [anchor=north east, inner sep=0.5in]  at (current page.north east)
+{\includegraphics[scale=0.4]{logo}};
+\end{tikzpicture}
+
 }
 
 % Heading
@@ -61,18 +57,17 @@
 
 % Text Fields
 \newcommand{\infoInput}[2][8cm]{\stepcounter{infoLineNum}%
-		\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\textField[\W0\BC{}\BG{}\TU{#2}]{name\theinfoLineNum}{#1}{12bp}}}\dotfill}}
-\newcommand{\infoInputNum}[2][3cm]{\stepcounter{infoLineNum}%
-	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\textField[\W0\BC{}\BG{}\TU{#2}\AA{%
-				\AAKeystroke{AFNumber_Keystroke(0,0,0,0,"",true)}
-				\AAFormat{AFNumber_Format(0,0,0,0,"",true)}}
-			]{name\theinfoLineNum}{#1}{12bp}}}\dotfill}}		
-\newcommand{\infoInputDate}[2][3cm]{\stepcounter{infoLineNum}%
-	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\textField[\W0\BC{}\BG{}\TU{#2}\AA{%
-				\AAKeystroke{AFDate_KeystrokeEx("yy-mm-dd")}
-				\AAFormat{AFDate_Format("yy-mm-dd")}}
-			]{name\theinfoLineNum}{#1}{12bp}}}\dotfill}}
+	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\TextField[height=12bp,width=#1,name=name\theinfoLineNum,altname={#2},borderwidth=0,tabkey=name\theinfoLineNum]{\ignorespaces}}}\dotfill}}
 
+\newcommand{\infoInputNum}[2][3cm]{\stepcounter{infoLineNum}%
+	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\TextField[height=12bp,width=#1,name=name\theinfoLineNum,altname={#2},borderwidth=0,tabkey=name\theinfoLineNum,
+				keystroke={AFNumber_Keystroke(0,0,0,0,"",true)},
+				format={AFNumber_Format(0,0,0,0,"",true)}]{\ignorespaces}}}\dotfill}}
+			
+\newcommand{\infoInputDate}[2][3cm]{\stepcounter{infoLineNum}%
+	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\TextField[height=12bp,width=#1,name=name\theinfoLineNum,altname={#2},borderwidth=0,tabkey=name\theinfoLineNum,
+				keystroke={AFDate_KeystrokeEx("yy-mm-dd")},
+				format={AFDate_Format("yy-mm-dd")}]{\ignorespaces}}}\dotfill}}
 % Sign area
 \newcommand{\signarea}{
 	\begin{minipage}{0.35\textwidth}
@@ -100,14 +95,15 @@
 }
 
 
-\DeclareDocInfo{
-	title=Antrag auf Mitgliedschaft - Westwoodlabs e.V.,
-	author=Westwoodlabs e.V.
-}
+%\DeclareDocInfo{
+%	title=Antrag auf Mitgliedschaft - Westwoodlabs e.V.,
+%	author=Westwoodlabs e.V.
+%}
 
 \renewcommand\thefootnote{\textcolor{black}{\arabic{footnote}}}
 
 \begin{document}
+\begin{Form}
 
 \header{Antrag auf Mitgliedschaft im Verein Westwoodlabs e.V.}
 
@@ -126,7 +122,8 @@
 
 \newcounter{checkboxcounter}
 \setcounter{checkboxcounter}{0}
-\def\firstCk{\stepcounter{checkboxcounter}\checkBox{checkbox\thecheckboxcounter}{11bp}{11bp}{ja}}
+%\def\firstCk{\stepcounter{checkboxcounter}\checkBox{checkbox\thecheckboxcounter}{11bp}{11bp}{ja}}
+\def\firstCk{\stepcounter{checkboxcounter}\CheckBox[width=11bp,height=11bp,bordercolor=0 0 0,altname=Ja,name=checkbox\thecheckboxcounter]{\ignorespaces}}
 \renewcommand{\labelitemi}{\firstCk}
 
 \vspace{10pt}
@@ -185,13 +182,13 @@ Sende den vollständig ausgefüllten Antrag bitte an:
 
 \header{Einzugsermächtigung und SEPA-Lastschriftmandat}
 
-\begin{minipage}[t]{0.5\textwidth}
+\begin{minipage}[t]{0.4\textwidth}
 	Westerwald Bank eG Volks- und Raiffeisenbank\\
 	IBAN: DRAFT DRAFT DRAFT\\
 	BIC: GENODE51WW1\\
 	Gläubiger-Identifikationsnummer: DE76WWL00002322139	
 \end{minipage}\hfill
-\begin{minipage}[t]{0.5\textwidth}
+\begin{minipage}[t]{0.2\textwidth}
 	\raggedright
 	\begin{flushright}
 		Westwoodlabs e.V.\\
@@ -199,7 +196,10 @@ Sende den vollständig ausgefüllten Antrag bitte an:
 		Friedrichstraße 13\\
 		57639 Rodenbach-Udert\\	
 	\end{flushright}
-\end{minipage}
+\end{minipage}\hfill
+%
+\hspace{.1in}
+
 
 \vspace{30pt}
 \textbf{Erteilung einer Einzugsermächtigung und eines SEPA-Lastschriftmandats}
@@ -242,4 +242,5 @@ Vor dem ersten Einzug einer SEPA-Basislastschrift wird mich Westwoodlabs e.V. ü
 \vspace{50pt}
 
 \signarea
+\end{Form}
 \end{document} 
