@@ -1,3 +1,1 @@
 # Antrag auf Mitgliedschaft
-
-DRAFT!
