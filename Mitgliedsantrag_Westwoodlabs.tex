@@ -1,0 +1,256 @@
+\pdfminorversion=7
+\documentclass[ngerman,a4paper]{article}
+\usepackage[margin=.5in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{libertine}
+\usepackage{babel}
+\usepackage[utf8]{inputenc}
+\usepackage{graphicx}
+\usepackage{tabularx}
+\usepackage{xcolor}
+\usepackage{multicol}
+\usepackage[hidelinks]{hyperref}
+\usepackage{calc}
+\usepackage{array}
+\usepackage{makecell}
+\usepackage{scrextend}
+\usepackage[hang,flushmargin]{footmisc}
+\usepackage{tikz}
+\usepackage{enumitem}
+
+% References
+% http://mirror.las.iastate.edu/tex-archive/macros/latex/contrib/aeb_pro/aeb_pro/doc/aebpro_man.pdf
+% https://ctan.net/macros/latex/contrib/acrotex/doc/eformman.pdf
+% https://www.adobe.com/content/dam/acom/en/devnet/acrobat/pdfs/FormsAPIReference.pdf
+% https://www.binary-kitchen.de/wiki/lib/exe/fetch.php?media=beitrittserklaerung_20190403.pdf
+% https://www.dante.de/wp-content/uploads/2019/06/AntragStandardSepa.pdf
+
+
+%% Layoutparameter
+\parindent 0pt
+\parskip 3pt
+\pagestyle{empty}
+\setlist[itemize]{noitemsep, topsep=0pt}
+
+% Header
+\newcommand{\header}[2]{%
+
+	\begin{minipage}[t]{0.8\textwidth}
+		\begin{flushleft}
+			\vspace{0pt}
+			\LARGE{#1}
+		\end{flushleft}
+	\end{minipage}%
+
+	\vspace{5pt}
+
+	\begin{tikzpicture}[remember picture, overlay]
+	\node[anchor=north east, inner sep=0.5in] at (current page.north east){
+		\includegraphics[scale=0.4]{logo}
+	};
+	\end{tikzpicture}
+
+}
+
+
+% Heading
+\newcommand{\heading}[2]{%
+	\textbf{#1}
+	\vspace{5pt}
+}
+
+% Datenschutz
+\newcommand{\datenschutz}[2]{
+	\heading{Datenschutzhinweise}\\
+	\\
+	Der Verein Westwoodlabs e.V. als verantwortliche Stelle nutzt und verarbeitet die in dieser #1 erhobenen personenbezogenen Daten. Vor- und Nachname, Geburtsdatum, Anschrift, E-Mail-Adresse, Mitgliedsbeitrag, Art der Mitgliedschaft sowie Bankverbindung werden zum Zweck der Vereins- und Mitgliederverwaltung, beispielsweise für die Übermittlung von Vereinsinformationen durch den Verein oder für den Einzug von Mitgliedsbeiträgen verarbeitet. Eine Übermittlung an Dritte oder eine Datennutzung zu Werbezwecken findet nicht statt. Name, Vorname, E-Mail-Adresse und ggf. Pseudonym (Nickname) werden zudem zum Zweck der vereinsinternen Kommunikation per Mailingliste genutzt und verarbeitet und können von allen Mitgliedern der Mailingliste eingesehen werden. Jede Person hat das Recht auf Auskunft, Berichtigung, Löschung, und Einschränkung der Verarbeitung seiner gespeicherten personenbezogenen Daten. Bei Beendigung der Mitgliedschaft werden die zum Zweck der Vereins- und Mitgliederverwaltung gespeicherten personenbezogenen Daten mit Ablauf der gesetzlich vorgeschriebenen Aufbewahrungsfrist gelöscht.
+}
+
+
+% Text Fields
+\newcommand{\infoInput}[2][8cm]{\stepcounter{infoLineNum}%
+	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\TextField[height=12bp,width=#1,name=name\theinfoLineNum,altname={#2},borderwidth=0,tabkey=name\theinfoLineNum]{\ignorespaces}}}\dotfill}}
+
+\newcommand{\infoInputNum}[2][3cm]{\stepcounter{infoLineNum}%
+	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\TextField[height=12bp,width=#1,name=name\theinfoLineNum,altname={#2},borderwidth=0,tabkey=name\theinfoLineNum,
+				keystroke={AFNumber_Keystroke(2,2,0,0,"",true)},
+				format={AFNumber_Format(2,2,0,0,"",true)}]{\ignorespaces}}}\dotfill}}
+
+% AFNumber_Format(nDec, sepStyle, negStyle, currStyle, strCurrency, bCurrencyPrepend)
+% nDec = number of decimals
+% sepStyle = separator style 0 = 1,234.56 / 1 = 1234.56 / 2 = 1.234,56 / 3 = 1234,56 /
+% negStyle = 0 black minus / 1 red minus / 2 parens black / 3 parens red /
+% currStyle = reserved
+% strCurrency = string of currency to display
+% bCurrencyPrepend = true = pre pend / false = post pend 
+			
+\newcommand{\infoInputDate}[2][3cm]{\stepcounter{infoLineNum}%
+	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\TextField[height=12bp,width=#1,name=name\theinfoLineNum,altname={#2},borderwidth=0,tabkey=name\theinfoLineNum,
+				keystroke={AFDate_KeystrokeEx("dd.mm.yyyy")},
+				format={AFDate_FormatEx("dd.mm.yyyy")}]{\ignorespaces}}}\dotfill}}
+% Sign area
+\newcommand{\signarea}{
+	\begin{minipage}{0.35\textwidth}
+		\begin{center}
+			\infoInput[\textwidth]{Ort}
+				
+			Ort
+		\end{center}
+	\end{minipage}\hfill
+	\begin{minipage}{0.15\textwidth}
+		\begin{center}
+			\infoInputDate[\textwidth]{Datum}
+			
+			Datum
+		\end{center}
+	\end{minipage}\hfill
+	\begin{minipage}{0.35\textwidth}
+		\begin{center}
+			\vspace{12bp}
+			\dotfill
+			
+			Unterschrift
+		\end{center}
+	\end{minipage}
+}
+
+
+%\DeclareDocInfo{
+%	title=Antrag auf Mitgliedschaft - Westwoodlabs e.V.,
+%	author=Westwoodlabs e.V.
+%}
+
+\renewcommand\thefootnote{\textcolor{black}{\arabic{footnote}}}
+
+\begin{document}
+\begin{Form}
+
+\header{Antrag auf Mitgliedschaft im Verein Westwoodlabs e.V.}
+
+\newcounter{infoLineNum}
+\setcounter{infoLineNum}{0}
+
+\heading{Stammdaten}\\
+\\
+\begin{tabular}{lp{5.5in}}
+    Vor- und Nachname:   				& \infoInput{Nachname, Vorname}\\[6pt]
+    Geburtsdatum:   					& \infoInput{Geburtsdatum}\\[6pt]
+    Straße und Hausnummer:              & \infoInput{Strasse Hausnummer}\\[6pt]
+    PLZ und Ort:                        & \infoInput{PLZ Ort}\\[6pt]
+    E-Mail:                             & \infoInput{E-Mail}\\[6pt]
+\end{tabular}
+
+\newcounter{checkboxcounter}
+\setcounter{checkboxcounter}{0}
+%\def\firstCk{\stepcounter{checkboxcounter}\checkBox{checkbox\thecheckboxcounter}{11bp}{11bp}{ja}}
+\def\firstCk{\stepcounter{checkboxcounter}\CheckBox[width=11bp,height=11bp,bordercolor=0 0 0,altname=Ja,name=checkbox\thecheckboxcounter]{\ignorespaces}}
+\renewcommand{\labelitemi}{\firstCk}
+
+\vspace{5pt}
+
+\heading{Mitgliedschaft}
+\\
+\begin{itemize}
+	\item Vollmitgliedschaft\footnote{Vollmitglieder zahlen einen Mindestbeitrag von 20,-€ pro Monat. Der Beitrag kann auf freiwilliger Basis erhöht werden.}
+	\item Vollmitgliedschaft ermäßigt\footnote{Ermäßigte Vollmitglieder zahlen einen Mindestbeitrag von 10,-€ pro Monat. Eine solche Ermäßigung gibt es für Studierende, Auszubildende, Personen im Ruhestand, Arbeitslose, Zivil- und Wehrdienstleistende. Bitte eine entsprechende Bescheinigung mitsenden, da ansonsten eine nachträgliche Hochstufung in die Gruppe \textit{Vollmitgliedschaft} erfolgt. Der Beitrag kann auf freiwilliger Basis erhöht werden.} (bitte Bescheinigung beilegen)
+	\item Fördermitgliedschaft\footnote{Fördermitglieder zahlen einen Mindestbeitrag von 5,-€ pro Monat. Fördermitglieder erhalten keinerlei Stimmrecht. Der Beitrag kann auf freiwilliger Basis erhöht werden.}
+\end{itemize}
+
+\vspace{5pt}
+
+\heading{Mitgliedsbeitrag\footnote{Bitte beachte, wenn du mit deinem Mitgliedsbeiträgen um mehr als sechs Monate im Rückstand bist, kann dies zur Kündigung und zum Ausschluss aus dem Verein führen.}}
+\\
+\begin{addmargin}{1em}
+	\infoInputNum[0.5in]{Mehrbeitrag}€ pro Monat\
+\end{addmargin}
+
+\vspace{5pt}
+
+\heading{Zahlungsmodalitäten}
+\\
+\begin{itemize}
+\item Lastschrift (Bitte unterschriebene Einzugsermächtigung beilegen, siehe zweite Seite)
+\item Überweisung oder Dauerauftrag (Bitte nur in Ausnahmefällen. Fällig zum 01. jeden Monats)
+\end{itemize}
+
+\vspace{15pt}
+
+Ich beantrage hiermit die Mitgliedschaft im Verein Westwoodlabs e.V. und erkenne die Satzung und Ziele des Vereins mit meiner Unterschrift an. 
+
+\vspace{20pt}
+
+\signarea
+
+\vspace{20pt}
+
+Sende den vollständig ausgefüllten und unterschriebenen Antrag bitte an vorstand@westwoodlabs.de (eingescannt oder mit qualifizierter elektronischer Signatur). Über die Aufnahme in den Verein entscheidet der Vorstand. Eine Rückmeldung erhältst du zeitnah per E-Mail. Sollte dein Antrag angenommen werden, bekommst du eine Willkommens-E-Mail.
+
+\vspace{20pt}
+
+\datenschutz{Beitrittserklärung}
+
+%% Rückseite
+\newpage
+
+\renewcommand\thesubsection{\arabic{subsection}}
+
+\header{Einzugsermächtigung und SEPA-Lastschriftmandat}
+
+Westwoodlabs e.V.\\
+c/o Patric Steffen\\
+Friedrichstraße 13\\
+57639 Rodenbach-Udert\\	
+\\	
+Westerwald Bank eG Volks- und Raiffeisenbank\\
+IBAN: DE27 5739 1800 0023 2916 06\\
+BIC: GENODE51WW1\\
+Gläubiger-Identifikationsnummer: DE76WWL00002322139\\
+
+\vspace{10pt}
+\textbf{Erteilung einer Einzugsermächtigung und eines SEPA-Lastschriftmandats}
+
+\bigskip
+\heading{Mitglied}\\
+\\
+\begin{tabular}{p{4cm}l}
+	Kontoinhaber:   					& \infoInput{Kontoinhaber}\\[6pt]
+	Straße und Hausnummer:              & \infoInput{Strasse Hausnummer}\\[6pt]
+	PLZ und Ort:                        & \infoInput{PLZ Ort}\\[6pt]
+\end{tabular}
+
+\bigskip
+\heading{Kreditinstitut}\\
+\\
+\begin{tabular}{p{4cm}l}
+	Name d. Kreditinstituts:		& \infoInput{Kreditinstitut}\\[6pt]
+	IBAN:       					& \infoInput{IBAN}\\[6pt]
+	BIC:       						& \infoInput{BIC}\\[6pt]
+\end{tabular}
+
+\bigskip
+\textbf{1. Einzugsermächtigung}
+
+Ich ermächtige Westwoodlabs e.V. widerruflich, die von mir zu entrichtenden Zahlungen bei Fälligkeit durch Lastschrift von meinem Konto einzuziehen.
+
+\bigskip
+\textbf{2. SEPA-Lastschriftmandat}
+
+Ich ermächtige Westwoodlabs e.V., Zahlungen von meinem Konto mittels Lastschrift einzuziehen. 
+Zugleich weise ich mein Kreditinstitut an, die von Westwoodlabs e.V. auf mein Konto gezogenen Lastschriften einzulösen.
+
+
+\emph{Hinweis:} Ich kann innerhalb von acht Wochen, beginnend mit dem Belastungsdatum, die Erstattung des belasteten Betrags verlangen. Es gelten dabei die mit meinem Kreditinstitut vereinbarten Bedingungen.
+
+\bigskip
+Vor dem ersten Einzug einer SEPA-Basislastschrift wird mich Westwoodlabs e.V. über den Einzug in dieser Verfahrensart unterrichten und mir die Mandatsreferenz mitteilen.\\
+
+\vspace{20pt}
+
+\signarea
+
+\vspace{20pt}
+
+\datenschutz{Einzugsermächtigung}
+
+\end{Form}
+\end{document} 
