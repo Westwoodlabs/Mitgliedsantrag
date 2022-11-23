@@ -79,7 +79,7 @@
 \newcommand{\infoInputDate}[2][3cm]{\stepcounter{infoLineNum}%
 	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\TextField[height=12bp,width=#1,name=name\theinfoLineNum,altname={#2},borderwidth=0,tabkey=name\theinfoLineNum,
 				keystroke={AFDate_KeystrokeEx("dd.mm.yyyy")},
-				format={AFDate_Format("dd.mm.yyyy")}]{\ignorespaces}}}\dotfill}}
+				format={AFDate_FormatEx("dd.mm.yyyy")}]{\ignorespaces}}}\dotfill}}
 % Sign area
 \newcommand{\signarea}{
 	\begin{minipage}{0.35\textwidth}
