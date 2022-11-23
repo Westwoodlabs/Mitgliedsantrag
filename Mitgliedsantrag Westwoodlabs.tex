@@ -73,8 +73,16 @@
 
 \newcommand{\infoInputNum}[2][3cm]{\stepcounter{infoLineNum}%
 	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\TextField[height=12bp,width=#1,name=name\theinfoLineNum,altname={#2},borderwidth=0,tabkey=name\theinfoLineNum,
-				keystroke={AFNumber_Keystroke(0,0,0,0,"",true)},
-				format={AFNumber_Format(0,0,0,0,"",true)}]{\ignorespaces}}}\dotfill}}
+				keystroke={AFNumber_Keystroke(2,2,0,0,"",true)},
+				format={AFNumber_Format(2,2,0,0,"",true)}]{\ignorespaces}}}\dotfill}}
+
+% AFNumber_Format(nDec, sepStyle, negStyle, currStyle, strCurrency, bCurrencyPrepend)
+% nDec = number of decimals
+% sepStyle = separator style 0 = 1,234.56 / 1 = 1234.56 / 2 = 1.234,56 / 3 = 1234,56 /
+% negStyle = 0 black minus / 1 red minus / 2 parens black / 3 parens red /
+% currStyle = reserved
+% strCurrency = string of currency to display
+% bCurrencyPrepend = true = pre pend / false = post pend 
 			
 \newcommand{\infoInputDate}[2][3cm]{\stepcounter{infoLineNum}%
 	\makebox[((#1)+0.1in)][l]{\makebox[0pt][l]{\kern4pt\raisebox{.75ex}{\TextField[height=12bp,width=#1,name=name\theinfoLineNum,altname={#2},borderwidth=0,tabkey=name\theinfoLineNum,
