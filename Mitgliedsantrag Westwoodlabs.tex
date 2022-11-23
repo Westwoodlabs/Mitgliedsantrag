@@ -35,21 +35,23 @@
 % Header
 \newcommand{\header}[2]{%
 
-\begin{minipage}[t]{0.8\textwidth}
-	\begin{flushleft}
-		\vspace{0pt}
-		\LARGE{#1}
-	\end{flushleft}
-\end{minipage}%
+	\begin{minipage}[t]{0.8\textwidth}
+		\begin{flushleft}
+			\vspace{0pt}
+			\LARGE{#1}
+		\end{flushleft}
+	\end{minipage}%
 
-\vspace{5pt}
+	\vspace{5pt}
 
-\begin{tikzpicture}[remember picture, overlay]
-\node [anchor=north east, inner sep=0.5in]  at (current page.north east)
-{\includegraphics[scale=0.4]{logo}};
-\end{tikzpicture}
+	\begin{tikzpicture}[remember picture, overlay]
+	\node[anchor=north east, inner sep=0.5in] at (current page.north east){
+		\includegraphics[scale=0.4]{logo}
+	};
+	\end{tikzpicture}
 
 }
+
 
 % Heading
 \newcommand{\heading}[2]{%
